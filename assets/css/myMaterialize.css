@@ -1,0 +1,4 @@
+/* Agrandit le champs du selecteur de mois pour affichage en fr */
+.datepicker-controls .select-month input {
+    width: 100px;
+}
