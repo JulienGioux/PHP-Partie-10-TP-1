@@ -1,3 +1,4 @@
+<?php require_once('controlFormStud.php'); ?>
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -29,7 +30,21 @@
 <body class="container">
 
     <section>
-        <form action="controlFormStud.php" method="post">
+        <?php if(!$testfName[0] || !isset($testfName[0]) &&
+                 !$testlName[0] || !isset($testlName[0]) && 
+                 !$testCountry[0] || !isset($testCountry[0]) && 
+                 !$testNationality[0] || !isset($testNationality[0]) && 
+                 !$testMail[0] || !isset($testMail[0]) && 
+                 !$testTel[0] || !isset($testTel[0]) && 
+                 !$testIdPolEmp[0] || !isset($testIdPolEmp[0]) && 
+                 !$testNbBadge[0] || !isset($testNbBadge[0]) && 
+                 !$testHero[0] || !isset($testHero[0]) &&
+                 !$testLastHack[0] || !isset($testLastHack[0]) &&
+                 !$testUrlCodecademy[0] || !isset($testUrlCodecademy[0]) &&
+                 !$testFirstCode[0] || !isset($testFirstCode[0])) 
+                 { ?>   
+                 
+        <form action="index.php" method="post">
             <fieldset>
                 <legend>Ajouter un apprenant :</legend>
                 <div class="row">
@@ -150,7 +165,7 @@
                 <div class="row">
                     <div class="input-field col s12">
                         <i class="material-icons prefix">account_circle</i>
-                        <textarea id="wwHero" class="materialize-textarea validate" maxlenght="250" minlength="25"
+                        <textarea id="wwHero" name="wwHero" class="materialize-textarea" maxlenght="250" minlength="25"
                             placeholder="Votre réponse ici..." rows="10" required></textarea>
                         <label for="wwHero">Si vous étiez un super héros/une super héroïne, qui seriez-vous et pourquoi
                             ?</label>
@@ -162,7 +177,7 @@
                 <div class="row">
                     <div class="input-field col s12">
                         <i class="material-icons prefix">account_circle</i>
-                        <textarea id="lastHack" class="materialize-textarea validate" maxlenght="250" minlength="25"
+                        <textarea id="lastHack" name="lastHack" class="materialize-textarea" maxlenght="250" minlength="25"
                             placeholder="Votre réponse ici..." rows="10" required></textarea>
                         <label for="lastHack">Racontez-nous un de vos "hacks" (pas forcément technique ou
                             informatique)</label>
@@ -187,8 +202,9 @@
                     </div>
                 </div>
             </fieldset>
-
+            <input type="submit" value="Envoyer">
         </form>
+                            <?php } ?>
     </section>
 
     <!-- Vérifie que materialize.js est bien chargé et initialise les champs de formulaire -->
