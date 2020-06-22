@@ -13,10 +13,10 @@ define('ARR_DEGREE', [
     'Bac+4 et plus'
 ]);
 define('REGEX_ID_POLE_EMP', '/^[0-9]{7}[A-Z]{1}$/');
-define('REGEX_NB_BADGE', '/^[0-9]{1,2}$/');
+define('REGEX_NB_BADGE', '/[0-9]{1,2}/');
 define('REGEX_URL_CODECADEMY', '/^https:\/\/codecademy.com\/.*$/');
 
-var_dump($_POST);
+// var_dump($_POST);
 
 
 function testInput($varPost,$regex){
@@ -49,23 +49,68 @@ function testDegree($varPost) {
 function validateDate($date, $format = 'd-m-Y'){
     $date = htmlspecialchars($date);
     $d = DateTime::createFromFormat($format, $date);
-    return [$d && $d->format($format) == $date, $d];
+    return [$d && $d->format($format) == $date, $date];
 }
-if (isset($_POST) && !empty($_POST)) {
-echo 'test';
-$testfName = testInput($_POST['fName'], REGEX_NAME);
-$testlName = testInput($_POST['lName'], REGEX_NAME);
-$testDateOfBirth = validateDate($_POST['dOfB']);
-$testCountry = testInput($_POST['country'], REGEX_COUNTRYNAME);
-$testNationality = testInput($_POST['nationality'], REGEX_COUNTRYNAME);
-$testMail = filter_var($_POST['email'], FILTER_VALIDATE_EMAIL);
-$testTel = testInput($_POST['tel'], REGEX_TELFR);
-$testDegree = testdegree($_POST['degree']);
-$testIdPolEmp = testInput($_POST['idPoleEmploi'], REGEX_ID_POLE_EMP);
-$testNbBadge = testInput($_POST['numBadge'], REGEX_NB_BADGE);
-$testHero = (isset($_POST['wwHero']) && (!empty($_POST['wwHero']))  && (strlen($_POST['wwHero']) >= 50) && (strlen($_POST['wwHero']) <= 250)) ? [TRUE, htmlspecialchars($_POST['wwHero'])] : [FALSE, htmlspecialchars($_POST['wwHero'])];
-$testLastHack = (isset($_POST['lastHack']) && (!empty($_POST['lastHack']))  && (strlen($_POST['lastHack']) >= 50) && (strlen($_POST['lastHack']) <= 250)) ? [TRUE, htmlspecialchars($_POST['lastHack'])] : [FALSE, htmlspecialchars($_POST['lastHack'])];
-$testUrlCodecademy = (filter_var($_POST['urlCodedademy'], FILTER_VALIDATE_URL, FILTER_FLAG_PATH_REQUIRED))? testInput($_POST['urlCodedademy'], REGEX_URL_CODECADEMY) : [FALSE, htmlspecialchars($_POST['urlCodedademy'])];
-$testFirstCode = ($_POST['firstCode'] == 'on' || $_POST['firstCode'] == 'off' ) ? [TRUE, htmlspecialchars($_POST['firstCode'])] : [FALSE, 'off'];
+function testSelectedArr($arr, $value) {
+    if (isset($arr) && !empty($arr)) {
+        if ($arr[0] && $arr[1] == $value) {
+            return 'selected';
+        }
+    }
 }
-// var_dump($testfName, $testlName, $testDateOfBirth, $testCountry, $testNationality, $testMail, $testTel, $testDegree, $testIdPolEmp, $testNbBadge, $testUrlCodecademy, $testHero, $testLastHack, $testFirstCode);
+
+if (isset($_POST) && !empty($_POST) && $_SERVER['DOCUMENT_URI'] == $_SERVER['SCRIPT_NAME']) {
+    $testFormPosted = TRUE;
+} else {
+    $testFormPosted = FALSE;
+}
+
+
+
+
+$testfName = [];
+$testlName = [];
+$testDateOfBirth = [];
+$testCountry = [];
+$testNationality = [];
+$testMail = [];
+$testTel = [];
+$testDegree = [];
+$testIdPolEmp = [];
+$testNbBadge = [];
+$testHero = [];
+$testLastHack = [];
+$testUrlCodecademy = [];
+$testFirstCode = [];
+
+
+
+
+if ($testFormPosted) {
+    $testfName = testInput($_POST['fName'], REGEX_NAME);
+    $testlName = testInput($_POST['lName'], REGEX_NAME);
+    $testDateOfBirth = validateDate($_POST['dOfB']);
+    $testCountry = testInput($_POST['country'], REGEX_COUNTRYNAME);
+    $testNationality = testInput($_POST['nationality'], REGEX_COUNTRYNAME);
+    $testMail = filter_var($_POST['email'], FILTER_VALIDATE_EMAIL);
+    $testMail = ($testMail == FALSE) ? [$testMail, htmlspecialchars($_POST['email'])] : [TRUE, $testMail];
+    $testTel = testInput($_POST['tel'], REGEX_TELFR);
+    $testDegree = (isset($_POST['degree'])) ? testdegree($_POST['degree']) : testdegree('');
+    $testIdPolEmp = testInput($_POST['idPoleEmploi'], REGEX_ID_POLE_EMP);
+    $testNbBadge = testInput($_POST['numBadge'], REGEX_NB_BADGE);
+    $testHero = (isset($_POST['wwHero']) && (!empty($_POST['wwHero'])) && (strlen(trim($_POST['wwHero'])) >= 50) && (strlen(trim($_POST['wwHero'])) <= 250)) ? [TRUE, htmlspecialchars(trim($_POST['wwHero']))] : [FALSE, htmlspecialchars(trim($_POST['wwHero']))];
+    $testLastHack = (isset($_POST['lastHack']) && (!empty($_POST['lastHack']) && (strlen(trim($_POST['lastHack'])) >= 50) && (strlen(trim($_POST['lastHack'])) <= 250))) ? [TRUE, htmlspecialchars(trim($_POST['lastHack']))] : [FALSE, htmlspecialchars(trim($_POST['lastHack']))];
+    $testUrlCodecademy = (filter_var($_POST['urlCodedademy'], FILTER_VALIDATE_URL, FILTER_FLAG_PATH_REQUIRED))? testInput($_POST['urlCodedademy'], REGEX_URL_CODECADEMY) : [FALSE, htmlspecialchars($_POST['urlCodedademy'])];
+    if (isset($_POST['firstCode'])) {
+        if (empty($_POST['firstCode'])) {
+            $testFirstCode = [FALSE, NULL];
+        }
+        if ($_POST['firstCode'] === 'on') {
+            $testFirstCode = [TRUE, 'on'];
+        }
+    } else {
+        $testFirstCode = [FALSE, NULL];
+    }
+    var_dump($testfName, $testlName, $testDateOfBirth, $testCountry, $testNationality, $testMail, $testTel, $testDegree, $testIdPolEmp, $testNbBadge, $testUrlCodecademy, $testHero, $testLastHack, $testFirstCode);
+}
+
