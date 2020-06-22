@@ -29,7 +29,7 @@
 <body class="container">
 
     <section>
-        <form action="" method="post">
+        <form action="controlFormStud.php" method="post">
             <fieldset>
                 <legend>Ajouter un apprenant :</legend>
                 <div class="row">
