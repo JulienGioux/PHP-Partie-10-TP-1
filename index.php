@@ -15,15 +15,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <link rel="stylesheet" href="assets/css/myMaterialize.css">
     <!-- Compiled and minified JavaScript -->
-    <script>
-        //Création de la balise
-        let tt = document.createElement('script');
-
-        function importJS() {
-            document.getElementById('initMat').insertBefore(tt, document.getElementById('initMat')[0]);
-            tt.src = 'https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js';
-        }
-    </script>
     <title>Partie 10 - TP-1</title>
 </head>
 
@@ -51,7 +42,7 @@
                 } else {
 
         ?>       
-        <form id="formAddStud" action="index.php" method="post" novalidate>
+        <form id="formAddStud" action="index.php" method="post">
             <fieldset>
                 <legend>Ajouter un apprenant :</legend>
                 <div class="row">
@@ -172,8 +163,8 @@
                 <div class="row">
                     <div class="input-field col s12">
                         <i class="material-icons prefix">account_circle</i>
-                        <textarea id="wwHero" name="wwHero" class="materialize-textarea validate" maxlenght="250" minlength="50"
-                            placeholder="Votre réponse ici..." rows="10" required><?= (isset($testHero) && !empty($testHero))? $testHero[1] : trim('') ?></textarea>
+                        <textarea id="wwHero" name="wwHero" class="materialize-textarea active validate" maxlenght="250" minlength="50" pattern="(.|\r|\n|\u2028|\u2029){2,100}"
+                            placeholder="Votre réponse ici..." rows="10" required></textarea>
                         <label for="wwHero">Si vous étiez un super héros/une super héroïne, qui seriez-vous et pourquoi
                             ?</label>
                         <span class="helper-text"
@@ -184,8 +175,8 @@
                 <div class="row">
                     <div class="input-field col s12">
                         <i class="material-icons prefix">account_circle</i>
-                        <textarea id="lastHack" name="lastHack" class="materialize-textarea validate" maxlenght="250" minlength="50"
-                            placeholder="Votre réponse ici..." rows="10" required><?= (isset($testLastHack) && !empty($testLastHack))? $testLastHack[1] : trim('') ?></textarea>
+                        <textarea id="lastHack" name="lastHack" class="materialize-textarea active validate" maxlenght="250" minlength="50"
+                            placeholder="Votre réponse ici..." rows="10" pattern="(.|\r|\n|\u2028|\u2029){50,250}" required></textarea>
                         <label for="lastHack">Racontez-nous un de vos "hacks" (pas forcément technique ou
                             informatique)</label>
                         <span class="helper-text"
@@ -216,7 +207,16 @@
     </section>
 
     <!-- Vérifie que materialize.js est bien chargé et initialise les champs de formulaire -->
-    <script id="initMat">
+    <script type="text/javascript">
+        //Création de la balise
+        let tt = document.createElement('script');
+
+        function importJS() {
+            document.getElementById('initMat').insertBefore(tt, document.getElementById('initMat')[0]);
+            tt.src = 'https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js';
+        }
+    </script>
+    <script id="initMat" type="text/javascript">
         setTimeout(importJS, 10);
         // redirige vers page d'erreur si le script n'est pas chargé ou bloqué par le navigateur
         tt.onerror = function () {
@@ -262,6 +262,7 @@
             <?php 
             if ($testFormPosted) {
             ?>
+            if (document.forms['formAddStud'] != null) {
                 fName.focus();
                 lName.focus();
                 dOfB.focus();
@@ -274,15 +275,23 @@
                 numBadge.focus();
                 urlCodedademy.focus();
                 wwHero.focus();
+                
+                console.log(lastHack.value);
                 lastHack.focus();
+                
+                
                 firstCode.focus();
                 lName.focus();
+                M.updateTextFields();
+            M.textareaAutoResize(lastHack);
+            M.textareaAutoResize(wwHero);
+            }
+
             <?php } ?>
 
         }
 
     </script>
-
 </body>
 
 </html>

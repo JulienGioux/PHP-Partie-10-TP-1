@@ -16,9 +16,6 @@ define('REGEX_ID_POLE_EMP', '/^[0-9]{7}[A-Z]{1}$/');
 define('REGEX_NB_BADGE', '/[0-9]{1,2}/');
 define('REGEX_URL_CODECADEMY', '/^https:\/\/codecademy.com\/.*$/');
 
-// var_dump($_POST);
-
-
 function testInput($varPost,$regex){
     $varPost = htmlspecialchars($varPost);
     if (!empty($varPost) && isset($varPost)) {       
@@ -59,7 +56,7 @@ function testSelectedArr($arr, $value) {
     }
 }
 
-if (isset($_POST) && !empty($_POST) && $_SERVER['DOCUMENT_URI'] == $_SERVER['SCRIPT_NAME']) {
+if (isset($_POST) && !empty($_POST) && $_SERVER['REQUEST_METHOD'] == 'POST') {
     $testFormPosted = TRUE;
 } else {
     $testFormPosted = FALSE;
@@ -111,6 +108,6 @@ if ($testFormPosted) {
     } else {
         $testFirstCode = [FALSE, NULL];
     }
-    var_dump($testfName, $testlName, $testDateOfBirth, $testCountry, $testNationality, $testMail, $testTel, $testDegree, $testIdPolEmp, $testNbBadge, $testUrlCodecademy, $testHero, $testLastHack, $testFirstCode);
+    // var_dump($testfName, $testlName, $testDateOfBirth, $testCountry, $testNationality, $testMail, $testTel, $testDegree, $testIdPolEmp, $testNbBadge, $testUrlCodecademy, $testHero, $testLastHack, $testFirstCode);
 }
 
