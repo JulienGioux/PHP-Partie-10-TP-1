@@ -15,6 +15,7 @@ define('ARR_DEGREE', [
 define('REGEX_ID_POLE_EMP', '/^[0-9]{7}[A-Z]{1}$/');
 define('REGEX_NB_BADGE', '/[0-9]{1,2}/');
 define('REGEX_URL_CODECADEMY', '/^https:\/\/codecademy.com\/.*$/');
+define('REGEX_TXTAREA', '/^(.|\r|\n|\u2028|\u2029){50,250}$/mu');
 
 function testInput($varPost,$regex){
     $varPost = htmlspecialchars($varPost);
@@ -95,8 +96,9 @@ if ($testFormPosted) {
     $testDegree = (isset($_POST['degree'])) ? testdegree($_POST['degree']) : testdegree('');
     $testIdPolEmp = testInput($_POST['idPoleEmploi'], REGEX_ID_POLE_EMP);
     $testNbBadge = testInput($_POST['numBadge'], REGEX_NB_BADGE);
-    $testHero = (isset($_POST['wwHero']) && (!empty($_POST['wwHero'])) && (strlen(trim($_POST['wwHero'])) >= 50) && (strlen(trim($_POST['wwHero'])) <= 250)) ? [TRUE, htmlspecialchars(trim($_POST['wwHero']))] : [FALSE, htmlspecialchars(trim($_POST['wwHero']))];
-    $testLastHack = (isset($_POST['lastHack']) && (!empty($_POST['lastHack']) && (strlen(trim($_POST['lastHack'])) >= 50) && (strlen(trim($_POST['lastHack'])) <= 250))) ? [TRUE, htmlspecialchars(trim($_POST['lastHack']))] : [FALSE, htmlspecialchars(trim($_POST['lastHack']))];
+    $testHero = (isset($_POST['wwHero']) && (!empty($_POST['wwHero'])) && (strlen($_POST['wwHero']) >= 50) && (strlen($_POST['wwHero']) <= 250)) ? [TRUE, htmlspecialchars($_POST['wwHero'])] : [FALSE, htmlspecialchars($_POST['wwHero'])];
+    $testLastHack = testInput($_POST['lastHack'], REGEX_TXTAREA);
+    var_dump($_POST['lastHack']);
     $testUrlCodecademy = (filter_var($_POST['urlCodedademy'], FILTER_VALIDATE_URL, FILTER_FLAG_PATH_REQUIRED))? testInput($_POST['urlCodedademy'], REGEX_URL_CODECADEMY) : [FALSE, htmlspecialchars($_POST['urlCodedademy'])];
     if (isset($_POST['firstCode'])) {
         if (empty($_POST['firstCode'])) {
@@ -108,6 +110,5 @@ if ($testFormPosted) {
     } else {
         $testFirstCode = [FALSE, NULL];
     }
-    // var_dump($testfName, $testlName, $testDateOfBirth, $testCountry, $testNationality, $testMail, $testTel, $testDegree, $testIdPolEmp, $testNbBadge, $testUrlCodecademy, $testHero, $testLastHack, $testFirstCode);
 }
 

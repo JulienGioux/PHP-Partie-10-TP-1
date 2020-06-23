@@ -2,3 +2,6 @@
 .datepicker-controls .select-month input {
     width: 100px;
 }
+.word-wrap {
+    word-wrap: break-word;
+}
