@@ -207,7 +207,7 @@
                 <div class="row">
                     <div class="input-field col s12">
                         <i class="material-icons prefix">history_edu</i>
-                        <textarea id="wwHero" name="wwHero" class="materialize-textarea validate" maxlenght="250"
+                        <textarea id="wwHero" name="wwHero" class="materialize-textarea validate" maxlength="250"
                             minlength="50" pattern="(.|\r|\n|\u2028|\u2029){5,250}" placeholder="Votre réponse ici..."
                             rows="10" required></textarea>
                         <label for="wwHero">Si vous étiez un super héros/une super héroïne, qui seriez-vous et pourquoi
@@ -221,13 +221,13 @@
                     <div class="input-field col s12">
                         <i class="material-icons prefix">history_edu</i>
                         <textarea id="lastHack" name="lastHack" class="materialize-textarea validate"
-                            maxlenght="250" minlength="50" placeholder="Votre réponse ici..." rows="10"
-                            pattern="(.|\r|\n|\u2028|\u2029){50,250}" required></textarea>
+                            minlength="50" data-length="200" maxlength="240" placeholder="Votre réponse ici..."
+                            pattern="(.|\n|\r){50,250}" required><?= (isset($testLastHack[0]) && !empty($testLastHack[0])) ? $testLastHack[1] : ''?></textarea>
                         <label for="lastHack">Racontez-nous un de vos "hacks" (pas forcément technique ou
                             informatique)</label>
-                        <span class="helper-text active"
+                        <!-- <span class="helper-text active"
                             data-error="Non conforme. Votre réponse doit comporter entre 50 et 250 caractères"
-                            data-success="ok">Entre 50 et 250 caractères</span>
+                            data-success="ok">Entre 50 et 250 caractères</span> -->
                     </div>
                 </div>
                 <div class="row">
@@ -309,7 +309,6 @@
 
 
 
-
             console.log(document.forms['formAddStud']); 
             <?php
             if ($testFormPosted) {
@@ -328,10 +327,12 @@
                     urlCodedademy.focus();
                     wwHero.value = "<?= ($testHero[0]) ? $testHero[1] : ''?>";
                     wwHero.focus();
-
-                    lastHack.value = nl2br(<?= ($testLastHack[0]) ? $testLastHack[1] : ''?>);
                     lastHack.focus();
-
+                    let testf = lastHack.parentNode.querySelector('.helper-text');
+                    let regexTxtArea = /(.|\n|\r){50,250}/mu;
+                    let boolHack = regexTxtArea.test(lastHack.value) && (lastHack.value.match(regexTxtArea)['0'].length == (`<?= grapheme_strlen($testLastHack[1]) ?>`));
+                    let testLastHack = '<?= (isset($testLastHack[0]) && !empty($testLastHack[0])) ? $testLastHack[0] : ''; ?>';
+                    
 
                     firstCode.focus();
                     lName.focus();
