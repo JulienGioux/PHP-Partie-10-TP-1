@@ -268,6 +268,7 @@
             tt.src = 'https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js';
         }
     </script>
+    <script src="assets/js/getWholeChar.js"></script>
     <script id="initMat" type="text/javascript">
         setTimeout(importJS, 10);
         // redirige vers page d'erreur si le script n'est pas chargé ou bloqué par le navigateur
@@ -342,6 +343,31 @@
             M.CharacterCounter.init(wwHero);
            
         }
+        function getEntersCount(text) {
+       var enters = text.split(/\r|\r\n|\n/),
+           count = enters.length;       
+       return count + text.length;
+}
+let getUTF8Length = function(string) {
+    var utf8length = 0;
+    for (var n = 0; n < string.length; n++) {
+        var c = string.charCodeAt(n);
+        if (c === 0) {
+            utf8length = utf8length;
+        }
+        else if (c < 128) {
+            utf8length++;
+        }
+        else if((c > 127) && (c < 2048)) {
+            utf8length = utf8length+2;
+        }
+        else {
+            utf8length = utf8length+3;
+        }
+    }
+    return utf8length;
+ }
+        wwHero.onkeyup = () => console.log(getUTF8Length(wwHero.value));
     </script>
 </body>
 

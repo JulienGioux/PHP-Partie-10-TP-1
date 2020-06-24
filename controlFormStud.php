@@ -15,7 +15,7 @@ define('ARR_DEGREE', [
 define('REGEX_ID_POLE_EMP', '/^[0-9]{7}[A-Z]{1}$/');
 define('REGEX_NB_BADGE', '/[0-9]{1,2}/');
 define('REGEX_URL_CODECADEMY', '/^https:\/\/codecademy.com\/.*$/');
-define('REGEX_TXTAREA', '/(.|\n){50,250}/mu');
+define('REGEX_TXTAREA', '/(.|\r|\r\n|\n){50,250}/m');
 
 function testInput($varPost,$regex){
     
@@ -118,16 +118,18 @@ if ($testFormPosted) {
         $testFirstCode = [FALSE, NULL];
     }
 }
-
-try {
-    $dbh = new PDO('mysql:host=localhost;dbname=test;charset=utf8', 'root', 'g=xXiG#V');
-    $stmt = $dbh->prepare("INSERT INTO `test` (`txtarea`) VALUES (:value)");
-    $stmt->bindParam(':value', $value);
-
-    // insertion d'une ligne
-
-    $value = $testHero[1];
-    $stmt->execute();
-} catch (PDOException $e) {
-    print "Erreur !: " . $e->getMessage() . "<br/>";
+if (isset($_POST)) {
+    try {
+        $dbh = new PDO('mysql:host=localhost;dbname=test;charset=utf8', 'root', 'g=xXiG#V');
+        $stmt = $dbh->prepare("INSERT INTO `test` (`txtarea`) VALUES (:value)");
+        $stmt->bindParam(':value', $value);
+    
+        // insertion d'une ligne
+    
+        $value = $testHero[1];
+        $stmt->execute();
+    } catch (PDOException $e) {
+        print "Erreur !: " . $e->getMessage() . "<br/>";
+    }
 }
+
