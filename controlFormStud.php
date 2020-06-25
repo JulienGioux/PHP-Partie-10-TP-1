@@ -119,7 +119,7 @@ if ($testFormPosted) {
 }
 if (isset($_POST)) {
     try {
-        $dbh = new PDO('mysql:host=localhost;dbname=testForm;charset=utf8mb4', 'testForm', 'JGx*140481');
+        $dbh = new PDO('mysql:host=localhost;dbname=testForm;charset=utf8mb4', 'testForm', '');
         $stmt = $dbh->prepare("INSERT INTO `testForm` (`txtarea`) VALUES (:value)");
         $stmt->bindParam(':value', $value);
     

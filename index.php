@@ -381,37 +381,19 @@ let getUTF8Length = function(string) {
 }
 
 function mb_strLen(str) {
-            var countChr = 0;
-            var ibis = [];
-            let encoder = new TextEncoder();
+            var countChr = str.length;
+            var count = 0;
             let uint8Array = new Uint8Array(str);
             for (let index = 0; index < str.length; index++) {
                 const element = str[index];
-                uint8Array = encoder.encode(element);
-                if (/^(\n|\r|\n\r)$/.test(element)) {
-                    countChr = countChr + 1; console.log('test');
-                } else {
-                    var i = [];
-                    for (let index = 0; index < uint8Array.length; index++) {
-                    const element2 = uint8Array[index];
-                    i.push(element2);                                   
-                    }
-                    
-                    ibis.push(i);
-
-                };
+                count = index;
+                console.log('el.len:' ,Uint8Array);
             }
-            if (ibis.length > 8) {
-                        let toto = ibis.length / 2;
-                        console.log('i.len : ' , ibis.length);
-                    }
+            console.log('count:' ,count);
             return countChr;
         } 
  
         wwHero.onkeyup = function() {
-            console.log(mb_strLen(wwHero.value));
-        }
-        document.onload = function() {
             console.log(mb_strLen(wwHero.value));
         }
     </script>
