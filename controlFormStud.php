@@ -15,12 +15,11 @@ define('ARR_DEGREE', [
 define('REGEX_ID_POLE_EMP', '/^[0-9]{7}[A-Z]{1}$/');
 define('REGEX_NB_BADGE', '/[0-9]{1,2}/');
 define('REGEX_URL_CODECADEMY', '/^https:\/\/codecademy.com\/.*$/');
-define('REGEX_TXTAREA', '/(.|\r|\r\n|\n){50,250}/m');
+define('REGEX_TXTAREA', '/(.|\r|\r\n|\n){50,250}/mu');
 
 function testInput($varPost,$regex){
     
     if (!empty($varPost) && isset($varPost)) { 
-
         echo 'test: ' . grapheme_strlen($varPost) . '<br>';
         echo 'test2: ' . mb_strlen($varPost, "UTF-8") . '<br>';
         echo 'test2: ' . strlen($varPost) . '<br>';
@@ -105,7 +104,7 @@ if ($testFormPosted) {
     $testNbBadge = testInput($_POST['numBadge'], REGEX_NB_BADGE);
     $testHero = testInput($_POST['wwHero'], REGEX_TXTAREA);
     $testLastHack = testInput($_POST['lastHack'], REGEX_TXTAREA);
-    var_dump($testLastHack);
+    
     $testUrlCodecademy = (filter_var($_POST['urlCodedademy'], FILTER_VALIDATE_URL, FILTER_FLAG_PATH_REQUIRED))? testInput($_POST['urlCodedademy'], REGEX_URL_CODECADEMY) : [FALSE, htmlspecialchars($_POST['urlCodedademy'])];
     if (isset($_POST['firstCode'])) {
         if (empty($_POST['firstCode'])) {
@@ -120,12 +119,12 @@ if ($testFormPosted) {
 }
 if (isset($_POST)) {
     try {
-        $dbh = new PDO('mysql:host=localhost;dbname=test;charset=utf8', 'root', 'g=xXiG#V');
-        $stmt = $dbh->prepare("INSERT INTO `test` (`txtarea`) VALUES (:value)");
+        $dbh = new PDO('mysql:host=localhost;dbname=testForm;charset=utf8mb4', 'testForm', 'JGx*140481');
+        $stmt = $dbh->prepare("INSERT INTO `testForm` (`txtarea`) VALUES (:value)");
         $stmt->bindParam(':value', $value);
     
         // insertion d'une ligne
-    
+        var_dump($testHero);
         $value = $testHero[1];
         $stmt->execute();
     } catch (PDOException $e) {

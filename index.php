@@ -367,7 +367,53 @@ let getUTF8Length = function(string) {
     }
     return utf8length;
  }
-        wwHero.onkeyup = () => console.log(getUTF8Length(wwHero.value));
+
+ function escapeHtml(text) {
+  var map = {
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#039;'
+  };
+  
+  return text.replace(/[&<>"']/g, function(m) { return map[m]; });
+}
+
+function mb_strLen(str) {
+            var countChr = 0;
+            var ibis = [];
+            let encoder = new TextEncoder();
+            let uint8Array = new Uint8Array(str);
+            for (let index = 0; index < str.length; index++) {
+                const element = str[index];
+                uint8Array = encoder.encode(element);
+                if (/^(\n|\r|\n\r)$/.test(element)) {
+                    countChr = countChr + 1; console.log('test');
+                } else {
+                    var i = [];
+                    for (let index = 0; index < uint8Array.length; index++) {
+                    const element2 = uint8Array[index];
+                    i.push(element2);                                   
+                    }
+                    
+                    ibis.push(i);
+
+                };
+            }
+            if (ibis.length > 8) {
+                        let toto = ibis.length / 2;
+                        console.log('i.len : ' , ibis.length);
+                    }
+            return countChr;
+        } 
+ 
+        wwHero.onkeyup = function() {
+            console.log(mb_strLen(wwHero.value));
+        }
+        document.onload = function() {
+            console.log(mb_strLen(wwHero.value));
+        }
     </script>
 </body>
 
