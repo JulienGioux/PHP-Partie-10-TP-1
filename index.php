@@ -34,7 +34,6 @@
                 $testHero[0] && 
                 $testLastHack[0] &&
                 $testUrlCodecademy[0] && 
-                $testFirstCode[0] && 
                 $testDegree[0]
                 ) { 
         ?>
@@ -337,9 +336,7 @@
             } 
             ?>
             M.updateTextFields();
-            M.textareaAutoResize(lastHack);
             M.CharacterCounter.init(lastHack);
-            M.textareaAutoResize(wwHero);
             M.CharacterCounter.init(wwHero);
            
         }
@@ -348,72 +345,6 @@
            count = enters.length;       
        return count + text.length;
 }
-let getUTF8Length = function(string) {
-    var utf8length = 0;
-    for (var n = 0; n < string.length; n++) {
-        var c = string.charCodeAt(n);
-        if (c === 0) {
-            utf8length = utf8length;
-        }
-        else if (c < 128) {
-            utf8length++;
-        }
-        else if((c > 127) && (c < 2048)) {
-            utf8length = utf8length+2;
-        }
-        else {
-            utf8length = utf8length+3;
-        }
-    }
-    return utf8length;
- }
-
- function escapeHtml(text) {
-  var map = {
-    '&': '&amp;',
-    '<': '&lt;',
-    '>': '&gt;',
-    '"': '&quot;',
-    "'": '&#039;'
-  };
-  
-  return text.replace(/[&<>"']/g, function(m) { return map[m]; });
-}
-
-function mb_strLen(str) {
-            var countChr = 0;
-            var ibis = [];
-            let encoder = new TextEncoder();
-            let uint8Array = new Uint8Array(str);
-            for (let index = 0; index < str.length; index++) {
-                const element = str[index];
-                uint8Array = encoder.encode(element);
-                if (/^(\n|\r|\n\r)$/.test(element)) {
-                    countChr = countChr + 1; console.log('test');
-                } else {
-                    var i = [];
-                    for (let index = 0; index < uint8Array.length; index++) {
-                    const element2 = uint8Array[index];
-                    i.push(element2);                                   
-                    }
-                    
-                    ibis.push(i);
-
-                };
-            }
-            if (ibis.length > 8) {
-                        let toto = ibis.length / 2;
-                        console.log('i.len : ' , ibis.length);
-                    }
-            return countChr;
-        } 
- 
-        wwHero.onkeyup = function() {
-            console.log(mb_strLen(wwHero.value));
-        }
-        document.onload = function() {
-            console.log(mb_strLen(wwHero.value));
-        }
     </script>
 </body>
 

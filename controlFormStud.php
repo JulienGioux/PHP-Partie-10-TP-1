@@ -20,12 +20,8 @@ define('REGEX_TXTAREA', '/(.|\r|\r\n|\n){50,250}/mu');
 function testInput($varPost,$regex){
     
     if (!empty($varPost) && isset($varPost)) { 
-        echo 'test: ' . grapheme_strlen($varPost) . '<br>';
-        echo 'test2: ' . mb_strlen($varPost, "UTF-8") . '<br>';
-        echo 'test2: ' . strlen($varPost) . '<br>';
         $testRegex = preg_match($regex, $varPost, $matches);     
         if ($testRegex == 1 && $matches[0] == $varPost) {
-            var_dump($varPost,$matches);
             $testVarPost = [TRUE, $matches[0]];
         } else {
             $testVarPost = [FALSE, $varPost];
@@ -34,7 +30,6 @@ function testInput($varPost,$regex){
         $testVarPost = [FALSE, $varPost];
     }
     return $testVarPost;
-    var_dump($testVarPost);
 }
 
 function testDegree($varPost) {
@@ -117,18 +112,5 @@ if ($testFormPosted) {
         $testFirstCode = [FALSE, NULL];
     }
 }
-if (isset($_POST)) {
-    try {
-        $dbh = new PDO('mysql:host=localhost;dbname=testForm;charset=utf8mb4', 'testForm', 'JGx*140481');
-        $stmt = $dbh->prepare("INSERT INTO `testForm` (`txtarea`) VALUES (:value)");
-        $stmt->bindParam(':value', $value);
-    
-        // insertion d'une ligne
-        var_dump($testHero);
-        $value = $testHero[1];
-        $stmt->execute();
-    } catch (PDOException $e) {
-        print "Erreur !: " . $e->getMessage() . "<br/>";
-    }
-}
+
 
